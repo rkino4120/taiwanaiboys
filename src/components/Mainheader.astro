@@ -1,0 +1,32 @@
+---
+import { Icon } from 'astro-iconify'
+import Langswitch from '../components/Langswitch.astro';
+const pathname = Astro.url.pathname;
+---
+
+<header id="top_header" class="w-full">
+    <Langswitch />
+	<div class="flex flex-col items-center">
+		<h1 class="w-20 mt-8"><a href="/"><img src="/images/logo.svg" alt="台湾AI男子" class="w-full" width="80" height="195"></a></h1>
+        <ul class="flex gap-x-6 py-10">
+            <li>
+                <a href="/about" class={`flex flex-col items-center justify-center w-21 border rounded-xl py-3 hover:bg-black hover:text-white${pathname === '/about' ? ' bg-black text-white' : ''}`}>
+                    <Icon name="mdi:id-card-outline" class="w-9 h-9" />
+                    <p class="font-bold">情報</p>
+                </a>
+            </li>
+            <li>
+                <a href="/boys" class={`flex flex-col items-center justify-center w-21 border rounded-xl py-3 hover:bg-black hover:text-white${pathname === '/boys' ? ' bg-black text-white' : ''}`}>
+                    <Icon name="mdi:human-male-male" class="w-9 h-9" />
+                    <p class="font-bold">Boys</p>
+                </a>
+            </li>
+            <li>
+                <a href="/request" class={`flex flex-col items-center justify-center w-21 border rounded-xl py-3 hover:bg-black hover:text-white${pathname === '/request' ? ' bg-black text-white' : ''}`}>
+                    <Icon name="mdi:message-question-outline" class="w-9 h-9" />
+                    <p class="font-bold">ご依頼</p>
+                </a>
+            </li>
+        </ul>
+	</div>
+</header>

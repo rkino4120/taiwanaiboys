@@ -1,0 +1,114 @@
+---
+import { Icon } from 'astro-iconify'
+
+const members = [
+    { num: '01', name: '第1期01號', likes: '智慧手錶', appearance: '黑框眼鏡／山羊鬍', personality: '跟誰都能打成一片，既親切又社交能力滿點，但私底下卻充滿神秘感。' },
+    { num: '02', name: '第1期02號', likes: '鐵板燒攤位', appearance: '短髮／圓框眼鏡', personality: '很有職人精神，對自己攤位的工作充滿自豪，對細節也非常講究。' },
+    { num: '03', name: '第1期03號', likes: '籃球', appearance: '高個子／濃眉', personality: '對任何事都很樂觀，對誰都能敞開心房，但私底下默默努力的程度絕不輸人。' },
+    { num: '04', name: '第1期04號', likes: '自拍、滑社群', appearance: '漂髮', personality: '很在乎身邊的人對自己的評價，其實有著私底下怕寂寞的一面。' },
+    { num: '05', name: '第1期05號', likes: '打電動', appearance: '黑框眼鏡／圓臉', personality: '個性溫和內向，但只要一聊到遊戲就會一秒燃起熱情、滔滔不絕。' },
+    { num: '06', name: '第1期06號', likes: '水果', appearance: '娃娃臉／油頭', personality: '對各種事物都充滿好奇心，就算是看起來很難的事也會先挑戰看看再說。' },
+    { num: '07', name: '第1期07號', likes: '滑板', appearance: '短褲', personality: '非常懂得為人處世，無論遇到什麼難關都能輕鬆化解，不會讓自己鑽牛角尖。' },
+    { num: '08', name: '第1期08號', likes: '喝咖啡的時間', appearance: '眼鏡／經典油頭', personality: '非常重視團隊和諧，遇到問題總是用開玩笑的方式和平解決，是個開朗的人。' },
+    { num: '09', name: '第1期09號', likes: '看書', appearance: '黑框眼鏡／高大魁梧的身材', personality: '有著強烈的個人信念，不會被一時的情緒牽著走，是個非常有自主性的人。' },
+    { num: '10', name: '第1期10號', likes: '設計', appearance: '濃眉／山羊鬍', personality: '隨時都能冷靜分析現況，並在關鍵時刻找出最完美的解決辦法。' },
+    { num: '11', name: '第1期11號', likes: '運動', appearance: '棒球帽／溫柔的眼神', personality: '只要看到好的事物就想推廣給更多人知道，是個不折不扣的積極行動派。' },
+    { num: '12', name: '第1期12號', likes: '插花', appearance: '兩側推高／長臉', personality: '心思細膩且富有藝術細胞，獨特的世界觀常常讓身邊的人大開眼界。' },
+];
+const memberCount = members.length;
+---
+
+<main>
+	<section id="message" class="w-full">
+		<div class="flex flex-col items-center mb-10">
+			<h2 class="text-3xl font-bold font-sawarabi-gothic mb-8">成員介紹</h2>
+			<ul class="flex gap-x-4 mb-6">
+				<li><a href="/tw/boys" class="hover:underline">第2期</a></li>
+				<li><a href="/tw/s01" class="hover:underline">第1期</a></li>
+			</ul>
+			<h3 class="text-2xl font-bold mb-6">第1期成員</h3>
+			<div class="w-[80%] mx-auto">
+				<ul class="grid grid-cols-2 gap-4">
+					{Array.from({ length: memberCount }, (_, i) => {
+						const num = String(i + 1).padStart(2, '0');
+						return (
+							<li>
+								<button data-modal={`member01_${num}`} class="w-full cursor-pointer hover:brightness-110">
+									<img src={`/images/member01_${num}.jpg`} alt="" class="w-full rounded-lg" />
+								</button>
+							</li>
+						);
+					})}
+				</ul>
+				<div class="flex mt-4">
+					<div class="w-full"><a href="/tw/boys" class="hover:underline">← 第2期</a></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- オーバーレイ -->
+<div id="modal-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
+
+<!-- メンバーモーダル -->
+{members.map((m, i) => {
+	const id = `member01_${m.num}`;
+	const isFirst = i === 0;
+	const isLast = i === memberCount - 1;
+	const prevNum = !isFirst ? members[i - 1].num : null;
+	const nextNum = !isLast ? members[i + 1].num : null;
+	return (
+		<div id={id} class="modal hidden fixed w-[90%] lg:w-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl drop-shadow-xl py-4 z-50">
+			<div class="text-right">
+				<button class="modal-close inline-flex items-center justify-center w-7 h-7 border rounded-full mr-4 mb-4 hover:bg-black hover:text-white">
+					<Icon name="mdi:close" class="w-4 h-4" />
+				</button>
+			</div>
+			<div class="w-[80%] mx-auto"><img src={`/images/${id}.jpg`} alt="" class="w-full" /></div>
+			<ul class="w-[80%] mx-auto mt-4 text-sm flex flex-col gap-y-2">
+				<li>{m.name}</li>
+				{m.likes && <li>最愛：{m.likes}</li>}
+				{m.appearance && <li>外型：{m.appearance}</li>}
+				{m.personality && <li>個性：{m.personality}</li>}
+			</ul>
+			<div class="w-[80%] mx-auto flex justify-between mt-4">
+				<div>{prevNum && <button data-nav-modal={`member01_${prevNum}`} class="hover:underline cursor-pointer">← 前</button>}</div>
+				<div>{nextNum && <button data-nav-modal={`member01_${nextNum}`} class="hover:underline cursor-pointer">次 →</button>}</div>
+			</div>
+		</div>
+	);
+})}
+
+<script>
+	const overlay = document.getElementById('modal-overlay')!;
+
+	function openModal(id: string) {
+		document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+		document.getElementById(id)?.classList.remove('hidden');
+		overlay.classList.remove('hidden');
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-modal]').forEach(trigger => {
+		trigger.addEventListener('click', () => {
+			openModal(trigger.dataset.modal!);
+		});
+	});
+
+	function closeAll() {
+		document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+		overlay.classList.add('hidden');
+	}
+
+	document.querySelectorAll('.modal-close').forEach(btn => {
+		btn.addEventListener('click', closeAll);
+	});
+
+	document.querySelectorAll<HTMLElement>('[data-nav-modal]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			openModal(btn.dataset.navModal!);
+		});
+	});
+
+	overlay.addEventListener('click', closeAll);
+</script>

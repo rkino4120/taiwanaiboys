@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sawarabi-gothic: var(--font-sawarabi-gothic);
+  --font-shippori-mincho: var(--font-shippori-mincho);
+  --font-noto-sans-tc: var(--font-noto-sans-tc);
+  --font-noto-serif-tc: var(--font-noto-serif-tc);
+}
+
+:root {
+  color-scheme: light;
+}

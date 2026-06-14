@@ -1,0 +1,12 @@
+---
+const pathname = Astro.url.pathname;
+const isTw = pathname.startsWith('/tw');
+
+const pagePath = isTw ? (pathname.replace(/^\/tw/, '') || '/') : pathname;
+const jaLink = pagePath;
+const twLink = pagePath === '/' ? '/tw' : `/tw${pagePath}`;
+---
+<ul class="flex w-full border-b border-l border-r border-black">
+    <li class="w-1/2"><a href={jaLink} class={`block py-1 text-center text-xs ${!isTw ? 'bg-black text-white' : ''}`}>日本語</a></li>
+    <li class="w-1/2"><a href={twLink} class={`block py-1 text-center text-xs ${isTw ? 'bg-black text-white' : ''}`}>台灣中文</a></li>
+</ul>

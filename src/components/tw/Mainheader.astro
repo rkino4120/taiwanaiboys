@@ -1,0 +1,32 @@
+---
+import { Icon } from 'astro-iconify'
+import Langswitch from '../../components/Langswitch.astro';
+const pathname = Astro.url.pathname;
+---
+
+<header id="top_header" class="w-full">
+    <Langswitch />
+	<div class="flex flex-col items-center">
+		<h1 class="w-20 mt-8"><a href="/tw"><img src="/images/logo.svg" alt="台湾AI男子" class="w-full" width="80" height="195"></a></h1>
+        <ul class="flex gap-x-6 py-10">
+            <li>
+                <a href="/tw/about" class={`flex flex-col items-center justify-center w-21 border rounded-xl py-3 hover:bg-black hover:text-white${pathname === '/tw/about' ? ' bg-black text-white' : ''}`}>
+                    <Icon name="mdi:id-card-outline" class="w-9 h-9" />
+                    <p class="font-bold">資訊</p>
+                </a>
+            </li>
+            <li>
+                <a href="/tw/boys" class={`flex flex-col items-center justify-center w-21 border rounded-xl py-3 hover:bg-black hover:text-white${pathname === '/tw/boys' ? ' bg-black text-white' : ''}`}>
+                    <Icon name="mdi:human-male-male" class="w-9 h-9" />
+                    <p class="font-bold">Boys</p>
+                </a>
+            </li>
+            <li>
+                <a href="/tw/request" class={`flex flex-col items-center justify-center w-21 border rounded-xl py-3 hover:bg-black hover:text-white${pathname === '/tw/request' ? ' bg-black text-white' : ''}`}>
+                    <Icon name="mdi:message-question-outline" class="w-9 h-9" />
+                    <p class="font-bold">洽詢</p>
+                </a>
+            </li>
+        </ul>
+	</div>
+</header>

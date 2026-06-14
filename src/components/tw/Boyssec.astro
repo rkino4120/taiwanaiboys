@@ -1,0 +1,114 @@
+---
+import { Icon } from 'astro-iconify'
+
+const members = [
+    { num: '01', name: '第2期01號', likes: '麵包', appearance: '半框眼鏡／山羊鬍', personality: '一旦喜歡上某件事就會徹底著迷，常常一個人說走就走、採取行動。' },
+    { num: '02', name: '第2期02號', likes: '游泳', appearance: '健康的小麥肌／短褲', personality: '跟任何年齡層的人都很聊得來，自帶一種吸引人的魅力。' },
+    { num: '03', name: '第2期03號', likes: '多肉植物', appearance: '長髮／高大魁梧的身材', personality: '總想把自己的興趣推坑給別人，只要一聊起來就停不下來。' },
+    { num: '04', name: '第2期04號', likes: '時尚', appearance: '銀框眼鏡', personality: '品味非常獨特，講出來的話常常讓朋友們大吃一驚。' },
+    { num: '05', name: '第2期05號', likes: '高蛋白', appearance: '眼鏡／休閒好活動的穿搭', personality: '生活極度自律，比起當下的氣氛，更堅持自己的原則。' },
+    { num: '06', name: '第2期06號', likes: '登山', appearance: '乾淨清爽的穿搭', personality: '骨子裡是個認真又愛操心的人，總是在意朋友之間的相處氣氛。' },
+    { num: '07', name: '第2期07號', likes: '網球', appearance: '挺拔的鼻梁', personality: '個性開朗、想法總是很正向，但偶爾也會沉浸在自己的小世界裡。' },
+    { num: '08', name: '第2期08號', likes: '精油', appearance: '落腮鬍', personality: '很重視一個人悠閒獨處的時光，大部分時間都是個待在家。' },
+    { num: '09', name: '第2期09號', likes: '滷味', appearance: '圓框眼鏡／淡淡的鬍渣', personality: '喜歡講冷笑話逗大家開心，有時候讓人分不清他到底是不是認真的。' },
+    { num: '10', name: '第2期10號', likes: '理髮', appearance: '染髮／八字鬍', personality: '話不多、聲音也很溫柔，不過表達個人意見時倒是直言不諱。' },
+    { num: '11', name: '第2期11號', likes: '生存遊戲', appearance: '精壯的骨架', personality: '其實很想和大家打成一片，卻很不擅長主動找人搭話。' },
+	{ num: '12', name: '第2期12號', likes: '畫畫', appearance: '曬黑的膚色／濃眉', personality: '不喜歡漫無目的地閒晃，一個人的時候通常都在畫畫。' },
+];
+const memberCount = members.length;
+---
+
+<main>
+	<section id="message" class="w-full">
+		<div class="flex flex-col items-center mb-10">
+			<h2 class="text-3xl font-bold font-sawarabi-gothic mb-8">成員介紹</h2>
+			<ul class="flex gap-x-4 mb-6">
+				<li><a href="/tw/boys" class="hover:underline">第2期</a></li>
+				<li><a href="/tw/s01" class="hover:underline">第1期</a></li>
+			</ul>
+			<h3 class="text-2xl font-bold mb-6">第2期成員</h3>
+			<div class="w-[80%] mx-auto">
+				<ul class="grid grid-cols-2 gap-4">
+					{Array.from({ length: memberCount }, (_, i) => {
+						const num = String(i + 1).padStart(2, '0');
+						return (
+							<li>
+								<button data-modal={`member02_${num}`} class="w-full cursor-pointer hover:brightness-110">
+									<img src={`/images/member02_${num}.jpg`} alt="" class="w-full rounded-lg" />
+								</button>
+							</li>
+						);
+					})}
+				</ul>
+				<div class="flex mt-4">
+					<div class="fl-auto text-right w-full"><a href="/tw/s01" class="hover:underline">第1期 →</a></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- オーバーレイ -->
+<div id="modal-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
+
+<!-- メンバーモーダル -->
+{members.map((m, i) => {
+	const id = `member02_${m.num}`;
+	const isFirst = i === 0;
+	const isLast = i === memberCount - 1;
+	const prevNum = !isFirst ? members[i - 1].num : null;
+	const nextNum = !isLast ? members[i + 1].num : null;
+	return (
+		<div id={id} class="modal hidden fixed w-[90%] lg:w-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl drop-shadow-xl py-4 z-50">
+			<div class="text-right">
+				<button class="modal-close inline-flex items-center justify-center w-7 h-7 border rounded-full mr-4 mb-4 hover:bg-black hover:text-white">
+					<Icon name="mdi:close" class="w-4 h-4" />
+				</button>
+			</div>
+			<div class="w-[80%] mx-auto"><img src={`/images/${id}.jpg`} alt="" class="w-full" /></div>
+			<ul class="w-[80%] mx-auto mt-4 text-sm flex flex-col gap-y-2">
+				<li>{m.name}</li>
+				{m.likes && <li>最愛：{m.likes}</li>}
+				{m.appearance && <li>外型：{m.appearance}</li>}
+				{m.personality && <li>個性：{m.personality}</li>}
+			</ul>
+			<div class="w-[80%] mx-auto flex justify-between mt-4">
+				<div>{prevNum && <button data-nav-modal={`member02_${prevNum}`} class="hover:underline cursor-pointer">← 前</button>}</div>
+				<div>{nextNum && <button data-nav-modal={`member02_${nextNum}`} class="hover:underline cursor-pointer">次 →</button>}</div>
+			</div>
+		</div>
+	);
+})}
+
+<script>
+	const overlay = document.getElementById('modal-overlay')!;
+
+	function openModal(id: string) {
+		document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+		document.getElementById(id)?.classList.remove('hidden');
+		overlay.classList.remove('hidden');
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-modal]').forEach(trigger => {
+		trigger.addEventListener('click', () => {
+			openModal(trigger.dataset.modal!);
+		});
+	});
+
+	function closeAll() {
+		document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+		overlay.classList.add('hidden');
+	}
+
+	document.querySelectorAll('.modal-close').forEach(btn => {
+		btn.addEventListener('click', closeAll);
+	});
+
+	document.querySelectorAll<HTMLElement>('[data-nav-modal]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			openModal(btn.dataset.navModal!);
+		});
+	});
+
+	overlay.addEventListener('click', closeAll);
+</script>

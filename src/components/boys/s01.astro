@@ -1,0 +1,114 @@
+---
+import { Icon } from 'astro-iconify'
+
+const members = [
+	{ num: '01', name: '第1期01番', likes: 'スマートウォッチ', appearance: '黒縁メガネ/アゴヒゲ', personality: '誰とでもなじめる親しみやすい社交的な性格だが、プライベートは謎に満ちている。' },
+	{ num: '02', name: '第1期02番', likes: '鉄板焼き屋台', appearance: '短髪/丸縁メガネ', personality: '職人気質で自分の屋台での仕事に誇りを持ち、こだわりも強い。' },
+	{ num: '03', name: '第1期03番', likes: 'バスケットボール', appearance: '高身長/眉', personality: '何事にも楽観的で誰に対しても心を開くが、1人での努力を惜しまない。' },
+	{ num: '04', name: '第1期04番', likes: '自撮り・SNS', appearance: 'ブリーチした髪', personality: '自分に対する周囲の反応が気になり、寂しがり屋の一面がある。' },
+	{ num: '05', name: '第1期05番', likes: 'ゲーム', appearance: '黒縁メガネ/丸顔', personality: '温厚で静かな性格だが、ゲームのことになると情熱的に語り出す。' },
+	{ num: '06', name: '第1期06番', likes: '果物(特にグァバ)', appearance: '童顔/フェードカット', personality: '色んな事に好奇心旺盛で、難しそうでもまず挑戦してみる性格。' },
+	{ num: '07', name: '第1期07番', likes: 'スケボー', appearance: 'ハーフパンツ', personality: '世渡り上手で、どんな難局でも軽やかにすり抜けて、深くは悩まない。' },
+	{ num: '08', name: '第1期08番', likes: 'コーヒーを飲む時間', appearance: 'メガネ/ツーブロック', personality: '周囲との調和を重視し、冗談を言って平和的に解決する明るい性格。' },
+	{ num: '09', name: '第1期09番', likes: '読書', appearance: '黒縁メガネ/大きな体格', personality: '強い信念を持ち、一時的な感情に流されることなく自主的に行動する。' },
+	{ num: '10', name: '第1期10番', likes: 'デザイン', appearance: '太い眉/アゴヒゲ', personality: '常に冷静に状況を分析することで、最適な解決方法を見出すことができる。' },
+	{ num: '11', name: '第1期11番', likes: '運動', appearance: 'キャップ/優しい目元', personality: '自分が良いと思うことを多くの人に広めたいと、積極的に行動する。' },
+	{ num: '12', name: '第1期12番', likes: 'フラワーアレンジメント', appearance: 'ツーブロック/面長', personality: '繊細で芸術的な感覚を持ち、独特の世界観が周囲を驚かせることも。' },
+];
+const memberCount = members.length;
+---
+
+<main>
+	<section id="message" class="w-full">
+		<div class="flex flex-col items-center mb-10">
+			<h2 class="text-3xl font-bold font-sawarabi-gothic mb-8">メンバー紹介</h2>
+			<ul class="flex gap-x-4 mb-6">
+				<li><a href="/boys" class="hover:underline">第2期</a></li>
+				<li><a href="/s01" class="hover:underline">第1期</a></li>
+			</ul>
+			<h3 class="text-2xl font-bold mb-6">第1期メンバー</h3>
+			<div class="w-[80%] mx-auto">
+				<ul class="grid grid-cols-2 gap-4">
+					{Array.from({ length: memberCount }, (_, i) => {
+						const num = String(i + 1).padStart(2, '0');
+						return (
+							<li>
+								<button data-modal={`member01_${num}`} class="w-full cursor-pointer hover:brightness-110">
+									<img src={`/images/member01_${num}.jpg`} alt="" class="w-full rounded-lg" />
+								</button>
+							</li>
+						);
+					})}
+				</ul>
+				<div class="flex mt-4">
+					<div class="w-full"><a href="/boys" class="hover:underline">← 第2期</a></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<!-- オーバーレイ -->
+<div id="modal-overlay" class="hidden fixed inset-0 bg-black/50 z-40"></div>
+
+<!-- メンバーモーダル -->
+{members.map((m, i) => {
+	const id = `member01_${m.num}`;
+	const isFirst = i === 0;
+	const isLast = i === memberCount - 1;
+	const prevNum = !isFirst ? members[i - 1].num : null;
+	const nextNum = !isLast ? members[i + 1].num : null;
+	return (
+		<div id={id} class="modal hidden fixed w-[90%] lg:w-80 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl drop-shadow-xl py-4 z-50">
+			<div class="text-right">
+				<button class="modal-close inline-flex items-center justify-center w-7 h-7 border rounded-full mr-4 mb-4 hover:bg-black hover:text-white">
+					<Icon name="mdi:close" class="w-4 h-4" />
+				</button>
+			</div>
+			<div class="w-[80%] mx-auto"><img src={`/images/${id}.jpg`} alt="" class="w-full" /></div>
+			<ul class="w-[80%] mx-auto mt-4 text-sm flex flex-col gap-y-2">
+				<li>{m.name}</li>
+				{m.likes && <li>好きなもの：{m.likes}</li>}
+				{m.appearance && <li>外見特徴：{m.appearance}</li>}
+				{m.personality && <li>個性：{m.personality}</li>}
+			</ul>
+			<div class="w-[80%] mx-auto flex justify-between mt-4">
+				<div>{prevNum && <button data-nav-modal={`member01_${prevNum}`} class="hover:underline cursor-pointer">← 前</button>}</div>
+				<div>{nextNum && <button data-nav-modal={`member01_${nextNum}`} class="hover:underline cursor-pointer">次 →</button>}</div>
+			</div>
+		</div>
+	);
+})}
+
+<script>
+	const overlay = document.getElementById('modal-overlay')!;
+
+	function openModal(id: string) {
+		document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+		document.getElementById(id)?.classList.remove('hidden');
+		overlay.classList.remove('hidden');
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-modal]').forEach(trigger => {
+		trigger.addEventListener('click', () => {
+			openModal(trigger.dataset.modal!);
+		});
+	});
+
+	function closeAll() {
+		document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
+		overlay.classList.add('hidden');
+	}
+
+	document.querySelectorAll('.modal-close').forEach(btn => {
+		btn.addEventListener('click', closeAll);
+	});
+
+	document.querySelectorAll<HTMLElement>('[data-nav-modal]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			openModal(btn.dataset.navModal!);
+		});
+	});
+
+	overlay.addEventListener('click', closeAll);
+</script>

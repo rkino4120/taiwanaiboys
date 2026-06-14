@@ -1,0 +1,46 @@
+---
+---
+
+<main>
+	<section id="message" class="w-full">
+		<div class="flex flex-col items-center mb-10">
+			<h2 class="text-3xl font-bold font-sawarabi-gothic mb-8">洽詢</h2>
+			<div class="flex flex-col w-[85%] mx-auto">
+                <p class="mb-6 leading-7">歡迎隨時與我們聯絡！</p>
+				<h3 class="font-shippori-mincho text-xl font-bold mb-2">1.AI圖像生成</h3>
+				<p class="mb-6 leading-7">接受商品、企業標誌、現有角色與台灣AI男子的圖像生成委託。</p>
+				<h3 class="font-shippori-mincho text-xl font-bold mb-2">2.合作洽詢</h3>
+				<p class="mb-6 leading-7">接受共同創作或角色授權使用的相關諮詢。</p>
+				<p class="text-red-600">※視內容而定，部分需求可能無法承接，敬請見諒。</p>
+			</div>
+		</div>
+	</section>
+
+	<section id="form" class="w-[85%] mx-auto">
+		<div class="flex flex-col">
+			<h2 class="text-3xl font-bold font-sawarabi-gothic mb-8">聯絡表單</h2>
+			<form>
+				<dl class="flex flex-col">
+					<dt class="text-lg font-bold mb-2">團體名稱・公司名稱</dt>
+					<dd class="mb-6"><input type="text" name="company" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg" placeholder="例：〇〇株式会社"></dd>
+					<dt class="text-lg font-bold mb-2">姓名<strong class="text-red-600 inline-block text-sm ml-2">必填</strong></dt>
+					<dd class="mb-6"><input type="text" name="name" class="w-full border border-gray-300 rounded-lg px-4 py-2" placeholder=""></dd>
+					<dt class="text-lg font-bold mb-2">電子郵件<strong class="text-red-600 inline-block text-sm ml-2">必填</strong></dt>
+					<dd class="mb-6"><input type="text" name="email" class="w-full border border-gray-300 rounded-lg px-4 py-2" placeholder=""></dd>
+					<dt class="text-lg font-bold mb-2">洽詢類別<strong class="text-red-600 inline-block text-sm ml-2">必填</strong></dt>
+					<dd class="mb-6"><select name="request" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg">
+						<option value="">請選擇</option>
+						<option value="廣告用圖像生成">廣告用圖像生成</option>
+						<option value="合作洽詢">合作洽詢</option>
+						<option value="其他">其他</option>
+					</select></dd>
+					<dt class="text-lg font-bold mb-2">委託內容<strong class="text-red-600 inline-block text-sm ml-2">必須</strong></dt>
+					<dd class="mb-6"><textarea name="message" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg" placeholder=""></textarea></dd>
+				</dl>
+				<div class="flex justify-center mt-8">
+					<button type="submit" class="bg-black text-white px-8 py-2 rounded-lg">送出</button>
+				</div>
+			</form>
+		</div>
+	</section>
+</main>

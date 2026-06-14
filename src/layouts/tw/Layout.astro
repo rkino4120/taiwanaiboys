@@ -1,17 +1,17 @@
 ---
 import { Font } from "astro:assets";
-import PhotoDepthFieldBackground from "../components/PhotoDepthFieldBackground";
+import PhotoDepthFieldBackground from "../../components/PhotoDepthFieldBackground";
 
 interface Props {
 	title?: string;
 	description?: string;
 }
 
-const { title = "台湾AI男子", description } = Astro.props;
+const { title = "台灣AI男子", description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="ja">
+<html lang="zh-Hant">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -20,14 +20,14 @@ const { title = "台湾AI男子", description } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		{description && <meta name="description" content={description} />}
 		<title>{title}</title>
-		<Font cssVariable="--font-sawarabi-gothic" preload />
-		<Font cssVariable="--font-shippori-mincho" preload />
+		<Font cssVariable="--font-noto-sans-tc" preload />
+		<Font cssVariable="--font-noto-serif-tc" preload />
 	</head>
 	<body class="relative min-h-screen overflow-x-hidden bg-white text-black">
-		<div class="fixed inset-0 z-0 pointer-events-none w-full h-full">
+		<div style="position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;">
 			<PhotoDepthFieldBackground client:load />
 		</div>
-		<div class="relative z-10 overflow-x-hidden lg:overflow-visible">
+		<div class="relative z-10">
 			<slot />
 		</div>
 	</body>
