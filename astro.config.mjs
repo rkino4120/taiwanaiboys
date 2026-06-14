@@ -6,7 +6,7 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  output: 'static',
+  output: 'server',
   adapter: cloudflare(),
   integrations: [react()],
   fonts: [
@@ -36,6 +36,15 @@ export default defineConfig({
     },
   ],
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    ssr: {
+      external: [
+        'three', 
+        '@react-three/fiber', 
+        '@react-three/drei', 
+        'postprocessing', 
+        '@react-three/postprocessing'
+      ]
+    }
   }
 });

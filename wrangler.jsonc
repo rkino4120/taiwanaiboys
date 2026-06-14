@@ -1,6 +1,6 @@
 {
 	"compatibility_date": "2026-06-14",
-	"compatibility_flags": ["global_fetch_strictly_public"],
+	"compatibility_flags": ["global_fetch_strictly_public", "nodejs_compat"],
 	"name": "taiwanaiboys",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {

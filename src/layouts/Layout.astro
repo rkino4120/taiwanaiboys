@@ -25,7 +25,7 @@ const { title = "台湾AI男子", description } = Astro.props;
 	</head>
 	<body class="relative min-h-screen overflow-x-hidden bg-white text-black">
 		<div class="fixed inset-0 z-0 pointer-events-none w-full h-full">
-			<PhotoDepthFieldBackground client:load />
+			<PhotoDepthFieldBackground client:only="react" />
 		</div>
 		<div class="relative z-10 overflow-x-hidden lg:overflow-visible">
 			<slot />
