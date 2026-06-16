@@ -6,7 +6,7 @@
 		<div class="flex flex-col items-center mb-10">
 			<h2 class="text-3xl font-bold font-sawarabi-gothic mb-8">洽詢</h2>
 			<div class="flex flex-col w-[85%] mx-auto">
-                <p class="mb-6 leading-7">歡迎隨時與我們聯絡！</p>
+				<p class="mb-6 leading-7">歡迎隨時與我們聯絡！</p>
 				<h3 class="font-shippori-mincho text-xl font-bold mb-2">1.AI圖像生成</h3>
 				<p class="mb-6 leading-7">接受商品、企業標誌、現有角色與台灣AI男子的圖像生成委託。</p>
 				<h3 class="font-shippori-mincho text-xl font-bold mb-2">2.合作洽詢</h3>
@@ -16,31 +16,279 @@
 		</div>
 	</section>
 
-	<section id="form" class="w-[85%] mx-auto">
+	<section id="form" class="w-[85%] mx-auto mb-16">
 		<div class="flex flex-col">
 			<h2 class="text-3xl font-bold font-sawarabi-gothic mb-8">聯絡表單</h2>
-			<form>
+			
+			<!-- 送信成功メッセージ表示エリア -->
+			<div id="success-message" class="hidden bg-green-50 border border-green-200 text-green-800 p-6 rounded-lg text-center mb-6">
+				<h3 class="text-xl font-bold mb-2">送信が完了いたしました</h3>
+				<p class="leading-7">お問合せいただきありがとうございます。内容を確認の上、担当者より contact@liang-works.com から折り返しご連絡いたします。</p>
+			</div>
+
+			<!-- 全体エラーメッセージ表示エリア -->
+			<div id="error-alert" class="hidden bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-6 text-sm">
+				<span id="error-alert-text">入力内容にエラーがあります。各項目を確認してください。</span>
+			</div>
+
+			<form id="contact-form" novalidate>
 				<dl class="flex flex-col">
+					<!-- 団体名・企業名 -->
 					<dt class="text-lg font-bold mb-2">團體名稱・公司名稱</dt>
-					<dd class="mb-6"><input type="text" name="company" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg" placeholder="例：〇〇株式会社"></dd>
-					<dt class="text-lg font-bold mb-2">姓名<strong class="text-red-600 inline-block text-sm ml-2">必填</strong></dt>
-					<dd class="mb-6"><input type="text" name="name" class="w-full border border-gray-300 rounded-lg px-4 py-2" placeholder=""></dd>
-					<dt class="text-lg font-bold mb-2">電子郵件<strong class="text-red-600 inline-block text-sm ml-2">必填</strong></dt>
-					<dd class="mb-6"><input type="text" name="email" class="w-full border border-gray-300 rounded-lg px-4 py-2" placeholder=""></dd>
-					<dt class="text-lg font-bold mb-2">洽詢類別<strong class="text-red-600 inline-block text-sm ml-2">必填</strong></dt>
-					<dd class="mb-6"><select name="request" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg">
-						<option value="">請選擇</option>
-						<option value="廣告用圖像生成">廣告用圖像生成</option>
-						<option value="合作洽詢">合作洽詢</option>
-						<option value="其他">其他</option>
-					</select></dd>
-					<dt class="text-lg font-bold mb-2">委託內容<strong class="text-red-600 inline-block text-sm ml-2">必須</strong></dt>
-					<dd class="mb-6"><textarea name="message" class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg" placeholder=""></textarea></dd>
+					<dd class="mb-6">
+						<input 
+							type="text" 
+							name="company" 
+							id="company"
+							class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-black" 
+							placeholder="例：〇〇株式会社"
+						>
+					</dd>
+
+					<!-- お名前 -->
+					<dt class="text-lg font-bold mb-2">
+						姓名<strong class="text-red-600 inline-block text-sm ml-2">必填</strong>
+					</dt>
+					<dd class="mb-6 relative">
+						<input 
+							type="text" 
+							name="name" 
+							id="name"
+							class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black" 
+							placeholder="山田 太郎"
+							required
+						>
+						<p class="error-msg text-red-600 text-sm mt-1 hidden" id="error-name"></p>
+					</dd>
+
+					<!-- メールアドレス -->
+					<dt class="text-lg font-bold mb-2">
+						電子郵件<strong class="text-red-600 inline-block text-sm ml-2">必填</strong>
+					</dt>
+					<dd class="mb-6 relative">
+						<input 
+							type="email" 
+							name="email" 
+							id="email"
+							class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black" 
+							placeholder="example@liang-works.com"
+							required
+						>
+						<p class="error-msg text-red-600 text-sm mt-1 hidden" id="error-email"></p>
+					</dd>
+
+					<!-- お問合せ種別 -->
+					<dt class="text-lg font-bold mb-2">
+						洽詢類別<strong class="text-red-600 inline-block text-sm ml-2">必填</strong>
+					</dt>
+					<dd class="mb-6 relative">
+						<select 
+							name="request" 
+							id="request"
+							class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-black bg-white"
+							required
+						>
+							<option value="">請選擇</option>
+							<option value="廣告用圖像生成">廣告用圖像生成</option>
+							<option value="合作洽詢">合作洽詢</option>
+							<option value="其他">其他</option>
+						</select>
+						<p class="error-msg text-red-600 text-sm mt-1 hidden" id="error-request"></p>
+					</dd>
+
+					<!-- ご依頼内容 -->
+					<dt class="text-lg font-bold mb-2">
+						委託內容<strong class="text-red-600 inline-block text-sm ml-2">必填</strong>
+					</dt>
+					<dd class="mb-6 relative">
+						<textarea 
+							name="message" 
+							id="message-body"
+							rows="6"
+							class="w-full border border-gray-300 rounded-lg px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-black" 
+							placeholder="具体的なご依頼内容をご記入ください。"
+							required
+						></textarea>
+						<p class="error-msg text-red-600 text-sm mt-1 hidden" id="error-message"></p>
+					</dd>
 				</dl>
+				
 				<div class="flex justify-center mt-8">
-					<button type="submit" class="bg-black text-white px-8 py-2 rounded-lg">送出</button>
+					<button 
+						type="submit" 
+						id="submit-btn"
+						class="bg-black text-white px-8 py-3 rounded-lg font-bold transition-all hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
+					>
+						<span id="btn-text">送出</span>
+						<div id="btn-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+					</button>
 				</div>
 			</form>
 		</div>
 	</section>
 </main>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const form = document.getElementById('contact-form') as HTMLFormElement | null;
+		const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+		const btnText = document.getElementById('btn-text');
+		const btnSpinner = document.getElementById('btn-spinner');
+		const successMessage = document.getElementById('success-message');
+		const errorAlert = document.getElementById('error-alert');
+		const errorAlertText = document.getElementById('error-alert-text');
+
+		if (!form || !submitBtn) return;
+
+		// 各入力項目の参照
+		const fields = {
+			name: {
+				input: document.getElementById('name') as HTMLInputElement,
+				error: document.getElementById('error-name'),
+				validate: (val: string) => val.trim() !== '' ? '' : 'お名前を入力してください。'
+			},
+			email: {
+				input: document.getElementById('email') as HTMLInputElement,
+				error: document.getElementById('error-email'),
+				validate: (val: string) => {
+					if (val.trim() === '') return 'メールアドレスを入力してください。';
+					const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					return emailRegex.test(val) ? '' : '正しいメールアドレスの形式で入力してください。';
+				}
+			},
+			request: {
+				input: document.getElementById('request') as HTMLSelectElement,
+				error: document.getElementById('error-request'),
+				validate: (val: string) => val !== '' ? '' : 'お問合せ種別を選択してください。'
+			},
+			message: {
+				input: document.getElementById('message-body') as HTMLTextAreaElement,
+				error: document.getElementById('error-message'),
+				validate: (val: string) => val.trim() !== '' ? '' : 'ご依頼内容を入力してください。'
+			}
+		};
+
+		// 各項目からフォーカスが外れたとき（blur）のリアルタイムバリデーション
+		Object.entries(fields).forEach(([key, field]) => {
+			field.input.addEventListener('blur', () => {
+				const errorMsg = field.validate(field.input.value);
+				showFieldError(field.input, field.error, errorMsg);
+			});
+
+			// 入力中に入力エラーが消えるように検知する
+			field.input.addEventListener('input', () => {
+				const errorMsg = field.validate(field.input.value);
+				if (!errorMsg) {
+					showFieldError(field.input, field.error, '');
+				}
+			});
+		});
+
+		// フィールドのエラー表示を切り替える汎用関数
+		function showFieldError(inputEl: HTMLElement, errorEl: HTMLElement | null, message: string) {
+			if (!errorEl) return;
+			if (message) {
+				errorEl.textContent = message;
+				errorEl.classList.remove('hidden');
+				inputEl.classList.add('border-red-500');
+				inputEl.classList.remove('border-gray-300');
+			} else {
+				errorEl.textContent = '';
+				errorEl.classList.add('hidden');
+				inputEl.classList.remove('border-red-500');
+				inputEl.classList.add('border-gray-300');
+			}
+		}
+
+		// フォーム送信時のイベント
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+
+			// 全体エラーと成功メッセージを初期化
+			if (errorAlert) errorAlert.classList.add('hidden');
+			if (successMessage) successMessage.classList.add('hidden');
+
+			// 全フィールドのバリデーションチェック
+			let hasError = false;
+			Object.entries(fields).forEach(([key, field]) => {
+				const errorMsg = field.validate(field.input.value);
+				showFieldError(field.input, field.error, errorMsg);
+				if (errorMsg) {
+					hasError = true;
+				}
+			});
+
+			if (hasError) {
+				if (errorAlert) {
+					errorAlert.classList.remove('hidden');
+					errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+				return;
+			}
+
+			// 送信中状態（ローディング表示 ＆ 多重送信防止）
+			setSubmitting(true);
+
+			const companyVal = (document.getElementById('company') as HTMLInputElement)?.value || '';
+
+			const formData = {
+				company: companyVal,
+				name: fields.name.input.value,
+				email: fields.email.input.value,
+				requestType: fields.request.input.value,
+				message: fields.message.input.value
+			};
+
+			try {
+				// 作成したサーバーサイドAPIエンドポイントにデータをPOST
+				const response = await fetch('/api/contact_tw', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(formData)
+				});
+
+				const result = await response.json();
+
+				if (response.ok && result.success) {
+					// 送信成功時
+					if (successMessage) {
+						successMessage.classList.remove('hidden');
+						successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}
+					form.reset(); // フォームをクリア
+				} else {
+					// サーバーエラーレスポンス時
+					throw new Error(result.error || '送信に失敗しました。お手数ですが再度お試しください。');
+				}
+
+			} catch (error: any) {
+				console.error('Submission Error:', error);
+				if (errorAlert && errorAlertText) {
+					errorAlertText.textContent = error.message || '通信エラーが発生しました。インターネット接続を確認の上、再度送信してください。';
+					errorAlert.classList.remove('hidden');
+					errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+				}
+			} finally {
+				// 送信中状態の解除
+				setSubmitting(false);
+			}
+		});
+
+		// 送信状態を切り替えるヘルパー関数
+		function setSubmitting(isSubmitting: boolean) {
+			if (!submitBtn || !btnText || !btnSpinner) return;
+			
+			if (isSubmitting) {
+				submitBtn.disabled = true;
+				btnText.textContent = '送信中...';
+				btnSpinner.classList.remove('hidden');
+			} else {
+				submitBtn.disabled = false;
+				btnText.textContent = '送信する';
+				btnSpinner.classList.add('hidden');
+			}
+		}
+	});
+</script>
