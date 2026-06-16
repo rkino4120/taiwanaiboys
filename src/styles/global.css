@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sawarabi-gothic: var(--font-sawarabi-gothic);
-  --font-shippori-mincho: var(--font-shippori-mincho);
-  --font-noto-sans-tc: var(--font-noto-sans-tc);
-  --font-noto-serif-tc: var(--font-noto-serif-tc);
+  --font-sawarabi-gothic: "Sawarabi Gothic", sans-serif;
+  --font-shippori-mincho: "Shippori Mincho", serif;
+  --font-noto-sans-tc: "Noto Sans TC", sans-serif;
+  --font-noto-serif-tc: "Noto Serif TC", serif;
 }
 
 :root {

@@ -1,0 +1,34 @@
+---
+interface Props {
+	name: 'mdi:close' | 'mdi:id-card-outline' | 'mdi:human-male-male' | 'mdi:message-question-outline';
+	class?: string;
+	title?: string;
+}
+
+const { name, class: className = '', title } = Astro.props;
+---
+
+{name === 'mdi:close' && (
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={className} aria-hidden={title ? undefined : 'true'} role="img">
+		{title && <title>{title}</title>}
+		<path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+	</svg>
+)}
+{name === 'mdi:id-card-outline' && (
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={className} aria-hidden={title ? undefined : 'true'} role="img">
+		{title && <title>{title}</title>}
+		<path d="M20 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2M4 7h16v10H4zm2 2v6h6V9zm1.5 1.5h3v1h-3zm0 2h3v1h-3zm7-1h4v1h-4zm0 2h4v1h-4z" />
+	</svg>
+)}
+{name === 'mdi:human-male-male' && (
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={className} aria-hidden={title ? undefined : 'true'} role="img">
+		{title && <title>{title}</title>}
+		<path d="M9 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0m8 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6 10c-2.21 0-4 1.79-4 4v5h2v-5c0-1.1.9-2 2-2s2 .9 2 2v5h2v-5c0-2.21-1.79-4-4-4m8 0c-2.21 0-4 1.79-4 4v5h2v-5c0-1.1.9-2 2-2s2 .9 2 2v5h2v-5c0-2.21-1.79-4-4-4m6 0c-1.31 0-2.42.83-2.83 2H19c.55 0 1 .45 1 1v6h2v-6a3 3 0 0 0-3-3" />
+	</svg>
+)}
+{name === 'mdi:message-question-outline' && (
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={className} aria-hidden={title ? undefined : 'true'} role="img">
+		{title && <title>{title}</title>}
+		<path d="M12 3C6.5 3 2 6.58 2 11c0 2.4 1.3 4.55 3.36 6.03L4 21l4.25-2.13c1.14.36 2.4.56 3.75.56 5.5 0 10-3.58 10-8s-4.5-8-10-8m.08 13.15c-.8 0-1.45-.6-1.45-1.35s.65-1.35 1.45-1.35 1.45.6 1.45 1.35-.65 1.35-1.45 1.35m1.8-5.3c-.45.29-.7.47-.8.76-.08.2-.08.5-.08.89h-2c0-.5 0-1.03.18-1.48.24-.63.74-1.05 1.28-1.4.5-.32.94-.6.94-1.12 0-.66-.58-1.1-1.4-1.1-.84 0-1.53.45-2.06 1.17L8.3 7.32C9.2 6.1 10.52 5.4 12.22 5.4c2.02 0 3.7 1.16 3.7 3.02 0 1.35-.9 1.93-2.04 2.43" />
+	</svg>
+)}
